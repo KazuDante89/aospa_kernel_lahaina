@@ -1,0 +1,18 @@
+version: 2.1
+jobs:
+  compile:
+   docker:
+      - image: ghcr.io/neutron-toolchains/docker-image:arch-neutron
+   steps:
+      - run:
+          no_output_timeout: 50m
+          command: |
+           git config --global user.name "kazudante89"
+           git config --global user.email "karlemmanueldorvil@gmail.com"
+           git config --global color.ui false
+           bash <(curl -s https://raw.githubusercontent.com/KazuDante89/aospa_kernel_lahaina/Neutron_R0.0/.circleci/setup.sh)
+workflows:
+  version: 2.1
+  cooking:
+    jobs:
+      - compile
