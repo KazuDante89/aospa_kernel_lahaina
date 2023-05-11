@@ -1262,6 +1262,16 @@ static inline u64 rq_clock_task(struct rq *rq)
 	return rq->clock_task;
 }
 
+DECLARE_PER_CPU(u64, clock_pelt_mult);
+
+static inline u64 rq_clock_pelt_mult(struct rq *rq)
+{
+	lockdep_assert_held(&rq->lock);
+	assert_clock_updated(rq);
+
+	return per_cpu(clock_pelt_mult, rq->cpu);
+}
+
 static inline void rq_clock_skip_update(struct rq *rq)
 {
 	lockdep_assert_held(&rq->lock);
